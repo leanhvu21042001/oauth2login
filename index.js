@@ -27,7 +27,7 @@ app.use("/api", require('./src/routes/index.routes'));
 app.all('*', (req, res) => {
   return res.status(404).json({ mgs: "Error 404", success: false });
 })
-app.use(errorHandler);
+app.use(require("./src/middlewares/errorHandler"));
 
 const port = process.env.PORT || 3500;
 app.listen(
