@@ -9,7 +9,7 @@ const { generateAccessToken, generateRefreshToken, refreshVerify } = require("..
 
 UserController.Register = async (req, res) => {
   const { name, email, password, avatarName } = req.body;
-  
+
   // check for duplicate email in database.
   const duplicate = await UserModel.findOne_email(email);
 
@@ -74,7 +74,7 @@ UserController.Login = async (req, res) => {
         created_at: userByEmail.created_at,
       }
       const accessToken = generateAccessToken(payload);
-     
+
       const refreshToken = generateRefreshToken(payload);
       // save refresh_token into the database with current user.
       await UserModel.update({ refresh_token: refreshToken }, userByEmail.id);
@@ -112,9 +112,9 @@ UserController.Logout = async (req, res) => {
 
     return res.status(204);
     // return res.json({ success: true, message: "Logout successfully!" });
-    
+
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ success: false, message: err.message });
   }
 }
 

@@ -34,7 +34,7 @@ const refreshVerify = (refreshToken, userByRefreshToken) => {
     const accessToken = generateAccessToken(payload);
     return accessToken;
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ success: false, message: err.message });
   }
 }
 module.exports = {
