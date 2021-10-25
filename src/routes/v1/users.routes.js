@@ -5,7 +5,7 @@ const router = express.Router();
 // @desc    Get current user.
 // @access  private
 router.get('/current', async (req, res) => {
-  return res.json({ mgs: "get current user" });
+  return res.json({ message: "get current user" });
 });
 
 module.exports = router;
