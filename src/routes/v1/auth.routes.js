@@ -19,14 +19,14 @@ router.post('/login', async (req, res) => {
 // @desc    User logout.
 // @access  Public
 router.get('/logout', async (req, res) => {
-  return res.json({ mgs: "Login" });
+  return res.json({ mgs: "logout" });
 });
 
 // @route   GET api/v1/auth/refresh-token
 // @desc    User refresh token.
 // @access  Public
 router.get('/refresh-token', async (req, res) => {
-  return res.json({ mgs: "Login" });
+  return res.json({ mgs: "refresh token" });
 });
 
 
