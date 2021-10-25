@@ -9,21 +9,21 @@ router.get('/',  async function (req, res) {
 });
 
 // @route   POST api/v1/posts
-// @desc    Create a posts.
+// @desc    Create a post.
 // @access  private.
 router.post('/', async function (req, res) {
   return res.json({ mgs: "Create post" });
 });
 
 // @route   POST api/v1/posts
-// @desc    Create a posts.
+// @desc    Update a post.
 // @access  private.
 router.patch('/', async function (req, res) {
   return res.json({ mgs: "Update post" });
 });
 
 // @route   DELETE api/v1/posts
-// @desc    Delete a posts.
+// @desc    Delete a post.
 // @access  private.
 router.delete('/', async function (req, res) {
   return res.json({ mgs: "Delete post" });

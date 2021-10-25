@@ -29,11 +29,11 @@ app.all('*', (req, res) => {
 })
 app.use(require("./src/middlewares/errorHandler"));
 
-const port = process.env.PORT || 3500;
+const PORT = process.env.PORT || 3500;
 app.listen(
-  port,
+  PORT,
   () => console.log(
-    `http://localhost:${port}\n 
+    `http://localhost:${PORT}\n 
     ------------------------`
   )
 );
