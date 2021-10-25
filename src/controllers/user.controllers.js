@@ -2,7 +2,6 @@ const UserModel = require("../models/user.model");
 const { v4: uuidv4 } = require("uuid");
 const UserController = {};
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const validateEmail = require("../validation/validateEmail");
 const bcryptConfig = require("../config/bcryptConfig");
 const { generateAccessToken, generateRefreshToken, refreshVerify } = require("../helpers/generateToken");
