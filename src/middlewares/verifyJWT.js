@@ -3,6 +3,9 @@ require('dotenv').config();
 const UserModel = require('../models/user.model');
 
 const verifyJWT = async (req, res, next) => {
+  if (req?.userGithub) {
+    return next();
+  }
   try {
     const authHeader = req.headers['authorization'];
     if (!authHeader) return res.sendStatus(401);
@@ -18,12 +21,12 @@ const verifyJWT = async (req, res, next) => {
       delete userByID.refresh_token
 
       req.user = userByID;
-      next();
+      return next();
     } else {
-      throw new Error("Invalid token");
+      return res.status(401).json({ success: false, message: "User not found" });
     }
   } catch (err) {
-    throw err;
+    return res.status(401).json({ success: false, message: "Invalid token" });
   }
 }
 

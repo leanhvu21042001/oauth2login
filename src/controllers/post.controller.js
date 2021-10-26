@@ -5,10 +5,14 @@ const PostModel = require('../models/post.model');
 
 PostController.GetPosts = async (req, res) => {
   try {
-    const user_id = req.user.id;
+    let user = req?.user;
+    if (req.userGithub) {
+      user = req.userGithub;
+    }
+    const user_id = user.id;
     const posts = await PostModel.getAll(user_id);
 
-    if (posts.length > 0) {
+    if (posts !== null) {
       return res.json({
         success: true,
         message: "Get posts successfully!",
@@ -17,22 +21,27 @@ PostController.GetPosts = async (req, res) => {
     } else {
       return res.json({
         success: false,
-        message: "No posts to get",
+        message: `No posts to get with user ${user?.name}`,
         data: []
       });
     }
 
 
   } catch (err) {
-    throw err;
+    return res.status(500).json({ success: false, message: err.message });
   }
 }
 
 PostController.CreatePost = async (req, res) => {
   try {
+    let user = req?.user;
+    if (req.userGithub) {
+      user = req.userGithub;
+    }
+
     const { title, content, likes } = req.body;
 
-    if (req.user) {
+    if (user) {
       if (String(title).trim().length === 0) {
         return res.status(400).json({ success: false, message: "Name is empty!" });
       }
@@ -42,7 +51,7 @@ PostController.CreatePost = async (req, res) => {
 
       const entity = {};
       entity.id = uuidv4();
-      entity.user_id = req.user.id;
+      entity.user_id = user.id;
       entity.title = title;
       entity.content = content;
       entity.likes = likes || 0;
@@ -61,9 +70,14 @@ PostController.CreatePost = async (req, res) => {
 
 PostController.UpdatePost = async (req, res) => {
   try {
+    let user = req?.user;
+    if (req.userGithub) {
+      user = req.userGithub;
+    }
+
     const { id, title, content, likes } = req.body;
 
-    if (req.user) {
+    if (user) {
       if (String(id).trim().length === 0) {
         return res.status(400).json({ success: false, message: "ID is required!" });
       }
@@ -74,14 +88,21 @@ PostController.UpdatePost = async (req, res) => {
         return res.status(400).json({ success: false, message: "Name is empty!" });
       }
 
+      const _post = await PostModel.findOne(user.id, id);
+
+      if (_post === null) {
+        return res.status(400).json({ success: false, message: `Not found 'post' to update!` });
+      }
+
       const entity = {};
       entity.id = id;
-      entity.user_id = req.user.id;
+      entity.user_id = user.id;
       entity.title = title;
       entity.content = content;
       entity.likes = likes || 0;
 
-      await PostModel.update(entity, req.user.id, id);
+
+      await PostModel.update(entity, user.id, id);
 
       return res.json({ success: true, message: 'Update post successfully!', "data": entity });
     } else {
@@ -95,15 +116,24 @@ PostController.UpdatePost = async (req, res) => {
 
 PostController.DeletePost = async (req, res) => {
   try {
+    let user = req?.user;
+    if (req.userGithub) {
+      user = req.userGithub;
+    }
     const { id } = req.body;
 
-    if (req.user) {
+    if (user) {
 
       if (String(id).trim().length === 0) {
         return res.status(400).json({ success: false, message: "ID is required!" });
       }
 
-      await PostModel.delete(req.user.id, id);
+      const _post = await PostModel.findOne(user.id, id);
+      if (_post === null) {
+        return res.status(400).json({ success: false, message: `Not found 'post' to delete!` });
+      }
+
+      await PostModel.delete(user.id, id);
       return res.json({ success: true, message: 'Delete post successfully!' });
     } else {
       return res.json({ success: false, message: 'Can not Update a new post' });

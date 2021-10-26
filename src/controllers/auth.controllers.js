@@ -1,13 +1,13 @@
 const UserModel = require("../models/user.model");
 const { v4: uuidv4 } = require("uuid");
-const UserController = {};
+const AuthController = {};
 const bcrypt = require("bcrypt");
 const validateEmail = require("../validation/validateEmail");
 const bcryptConfig = require("../config/bcryptConfig");
 const { generateAccessToken, generateRefreshToken, refreshVerify } = require("../helpers/generateToken");
 
 
-UserController.Register = async (req, res) => {
+AuthController.Register = async (req, res) => {
   const { name, email, password, avatarName } = req.body;
 
   // check for duplicate email in database.
@@ -38,7 +38,7 @@ UserController.Register = async (req, res) => {
   }
 }
 
-UserController.Login = async (req, res) => {
+AuthController.Login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -90,7 +90,7 @@ UserController.Login = async (req, res) => {
 
 }
 
-UserController.Logout = async (req, res) => {
+AuthController.Logout = async (req, res) => {
   try {
     const cookies = req.cookies;
     // check is email invalid
@@ -118,7 +118,7 @@ UserController.Logout = async (req, res) => {
   }
 }
 
-UserController.RefreshToken = async (req, res) => {
+AuthController.RefreshToken = async (req, res) => {
 
   // get cookies from request.
   const cookies = req.cookies;
@@ -168,4 +168,4 @@ UserController.RefreshToken = async (req, res) => {
 }
 
 
-module.exports = UserController;
+module.exports = AuthController;
