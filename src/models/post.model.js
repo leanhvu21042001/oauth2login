@@ -22,10 +22,10 @@ PostModel.findOne = async function (user_id, post_id) {
   return rows[0];
 }
 
-PostModel.delete = (user_id, post_id) => db.delete2condition({ user_id: user_id }, { id: post_id })
+PostModel.delete = (user_id, post_id) => db.delete2condition(TBL_POSTS, { user_id: user_id }, { id: post_id })
 
-PostModel.getAll = async function () {
-  const rows = await db.load(`SELECT * FROM ${TBL_POSTS}`);
+PostModel.getAll = async function (user_id) {
+  const rows = await db.load(`SELECT * FROM ${TBL_POSTS} WHERE ${TBL_COL_USER_ID} = '${user_id}'`);
   if (rows.length === 0) { return null }
   return rows;
 }

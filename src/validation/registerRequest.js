@@ -1,3 +1,5 @@
+const validateEmail = require("./validateEmail");
+
 const validateRegister = (req, res, next) => {
   try {
     const { name, email, password, avatarName } = req.body;
