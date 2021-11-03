@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const rateLimit = require("express-rate-limit");
 const helmet = require('helmet');
-// require('express-async-errors');
 
 // Create application instance
 const app = express()

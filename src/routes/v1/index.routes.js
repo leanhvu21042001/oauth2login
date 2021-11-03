@@ -11,7 +11,7 @@ const verifyJWT = require('../../middlewares/verifyJWT');
 router.use("/auth", auth);
 
 // users router
-router.use("/users", users);
+router.use("/users", githubVerify, verifyJWT, users);
 
 // posts router
 router.use("/posts", githubVerify, verifyJWT, posts);

@@ -5,11 +5,15 @@ const router = express.Router();
 // @route   GET api/v1/users/current
 // @desc    Get current user.
 // @access  private
-router.get('/current', verifyJWT, async (req, res) => {
+router.get('/current', async (req, res) => {
+  let user = req?.user;
+    if (req.userGithub) {
+      user = req.userGithub;
+    }
   return res.json({
     success: true,
     message: "Get current user successfully!",
-    data: req.user
+    data: user
   });
 });
 
