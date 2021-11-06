@@ -10,7 +10,7 @@ const validateRegister = require('../../validation/registerRequest');
 // @route   GET api/v1/auth/register
 // @desc    Register user
 // @access  Public
-router.post('/register', upload, validateRegister, AuthController.Register);
+router.post('/register', validateRegister, upload, AuthController.Register);
 
 // @route   GET api/v1/auth/login
 // @desc    User login.

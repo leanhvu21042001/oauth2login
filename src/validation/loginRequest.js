@@ -1,21 +1,21 @@
 const validateEmail = require("./validateEmail");
 
 const validateLogin = (req, res, next) => {
-  try {
-    const { email, password } = req.body;
+    try {
+        const {email, password} = req.body;
 
-    if (!validateEmail(email)) {
-      return res.status(400).json({ success: false, message: "Invalid email address!" });
+        if (!validateEmail(email) || email === undefined) {
+            return res.status(400).json({success: false, message: "Invalid email address!"});
+        }
+
+        if (String(password).length === 0 || password === undefined) {
+            return res.status(400).json({success: false, message: "Password is empty!"});
+        }
+
+    } catch (err) {
+        return res.status(500).json({success: false, message: err.message});
     }
-
-    if (String(password).length === 0) {
-      return res.status(400).json({ success: false, message: "Password is empty!" });
-    }
-
-  } catch (err) {
-    return res.status(400).json({ success: false, message: err.message });
-  }
-  next();
+    next();
 }
 
 module.exports = validateLogin;

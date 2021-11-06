@@ -1,3 +1,3 @@
 module.exports = bcryptConfig = {
-  saltRounds: 10
+    saltRounds: 10
 }

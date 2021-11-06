@@ -6,15 +6,15 @@ const router = express.Router();
 // @desc    Get current user.
 // @access  private
 router.get('/current', async (req, res) => {
-  let user = req?.user;
+    let user = req?.user;
     if (req.userGithub) {
-      user = req.userGithub;
+        user = req.userGithub;
     }
-  return res.json({
-    success: true,
-    message: "Get current user successfully!",
-    data: user
-  });
+    return res.json({
+        success: true,
+        message: "Get current user successfully!",
+        data: user
+    });
 });
 
 module.exports = router;
