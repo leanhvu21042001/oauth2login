@@ -10,6 +10,7 @@ router.get('/current', async (req, res) => {
     if (req.userGithub) {
         user = req.userGithub;
     }
+    delete user.index_row
     return res.json({
         success: true,
         message: "Get current user successfully!",

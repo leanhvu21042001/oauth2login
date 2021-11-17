@@ -13,10 +13,15 @@ PostController.GetPosts = async (req, res) => {
         const posts = await postModel.getAll(user_id);
 
         if (posts !== null) {
+
+            const newPosts = posts.map(post => {
+                delete post.index_row
+                return post;
+            });
             return res.json({
                 success: true,
                 message: "Get posts successfully!",
-                data: posts
+                data: newPosts
             });
         } else {
             return res.json({
@@ -111,6 +116,7 @@ PostController.UpdatePost = async (req, res) => {
             entity.likes = likes || 0;
             entity.version = version || 0;
 
+            delete _post.index_row
             if (version - _post.version !== 1) {
                 return res.status(400).json({
                     success: false, message: `Invalid version!`,
